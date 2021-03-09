@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -65,10 +68,18 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_login, container, false);
         textView_register = view.findViewById(R.id.textView5);
+        textView_message = view.findViewById(R.id.textView10);
+        editText_username = view.findViewById(R.id.editTextTextPersonName);
+        editText_password = view.findViewById(R.id.editTextTextPassword);
+        button_login = view.findViewById(R.id.button);
+        myViewModel = new ViewModelProvider(this,new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication())).get(MyViewModel.class);
         return view;
     }
 
-    private TextView textView_register;
+    private TextView textView_register,textView_message;
+    private EditText editText_username,editText_password;
+    private Button button_login;
+    private MyViewModel myViewModel;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -77,6 +88,18 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 NavController navController = Navigation.findNavController(v);
                 navController.navigate(R.id.action_loginFragment_to_registerFragment);
+            }
+        });
+        button_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = myViewModel.login(editText_username.getText().toString().trim(),editText_password.getText().toString().trim());
+                if(message.equals("success")) {
+                    NavController controller = Navigation.findNavController(v);
+                    controller.navigate(R.id.action_loginFragment_to_registerFragment);
+                }else {
+                    textView_message.setText(message);
+                }
             }
         });
     }

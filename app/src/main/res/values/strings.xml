@@ -18,4 +18,5 @@
     <string name="editText_register_confirm_password">请输入与第一次相同的密码</string>
     <string name="textView_register_hint" />
     <string name="button_register">注册</string>
+    <string name="textView_login_error" />
 </resources>
