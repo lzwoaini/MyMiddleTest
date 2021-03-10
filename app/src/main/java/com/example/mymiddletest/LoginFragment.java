@@ -84,6 +84,11 @@ public class LoginFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Intent intent = new Intent(getActivity(),HomeActivity.class);
+        if (myViewModel.autoLogin()) {
+            startActivity(intent);
+            getActivity().finish();
+        }
         textView_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +101,6 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 String message = myViewModel.login(editText_username.getText().toString().trim(),editText_password.getText().toString().trim());
                 if(message.equals("success")) {
-                    Intent intent = new Intent(getActivity(),HomeActivity.class);
                     startActivity(intent);
                     getActivity().finish();
                 }else {
@@ -104,5 +108,15 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        System.out.println("YES!!!!!!!!!!");
+        if (myViewModel == null){
+        }else {
+            myViewModel.saveLogin(myViewModel.getUsername());
+        }
+        super.onDestroy();
     }
 }
