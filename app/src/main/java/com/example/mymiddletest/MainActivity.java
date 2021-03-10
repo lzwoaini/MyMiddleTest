@@ -24,4 +24,9 @@ public class MainActivity extends AppCompatActivity {
         NavController controller = Navigation.findNavController(this,R.id.fragment);
         return controller.navigateUp();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

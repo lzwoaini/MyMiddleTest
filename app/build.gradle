@@ -33,6 +33,8 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     def lifecycle_version = "2.3.0"
     def arch_version = "2.1.0"
     def nav_version = "2.3.3"

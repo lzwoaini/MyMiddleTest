@@ -1,5 +1,6 @@
 package com.example.mymiddletest;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -95,8 +96,9 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 String message = myViewModel.login(editText_username.getText().toString().trim(),editText_password.getText().toString().trim());
                 if(message.equals("success")) {
-                    NavController controller = Navigation.findNavController(v);
-                    controller.navigate(R.id.action_loginFragment_to_registerFragment);
+                    Intent intent = new Intent(getActivity(),HomeActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
                 }else {
                     textView_message.setText(message);
                 }

@@ -19,4 +19,7 @@
     <string name="textView_register_hint" />
     <string name="button_register">注册</string>
     <string name="textView_login_error" />
+    <string name="first_menu">FirstMenu</string>
+    <string name="home_menu">HomeMenu</string>
+    <string name="user_menu">UserMenu</string>
 </resources>
