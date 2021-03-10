@@ -94,6 +94,10 @@ public class RegisterFragment extends Fragment {
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager manager = ((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE));
+                if (manager != null) {
+                    manager.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
                 String message = myViewModel.register(editText_username.getText().toString(),editText_password.getText().toString(),editText_confirm_password.getText().toString());
                 if (message.equals("success")) {
                     Toast.makeText(getContext(), "注册成功!3s后自动跳转到登录页面", Toast.LENGTH_LONG).show();
