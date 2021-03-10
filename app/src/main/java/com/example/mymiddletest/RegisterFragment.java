@@ -1,5 +1,7 @@
 package com.example.mymiddletest;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -8,12 +10,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -90,8 +96,15 @@ public class RegisterFragment extends Fragment {
             public void onClick(View v) {
                 String message = myViewModel.register(editText_username.getText().toString(),editText_password.getText().toString(),editText_confirm_password.getText().toString());
                 if (message.equals("success")) {
-                    NavController controller = Navigation.findNavController(v);
-                    controller.navigate(R.id.action_registerFragment_to_loginFragment);
+                    Toast.makeText(getContext(), "注册成功!3s后自动跳转到登录页面", Toast.LENGTH_LONG).show();
+                    new Handler(new Handler.Callback() {
+                        @Override
+                        public boolean handleMessage(Message msg) {
+                            NavController controller = Navigation.findNavController(v);
+                            controller.navigate(R.id.action_registerFragment_to_loginFragment);
+                            return false;
+                        }
+                    }).sendEmptyMessageDelayed(0,3000);
                 }else {
                     textView_message.setText(message);
                 }
