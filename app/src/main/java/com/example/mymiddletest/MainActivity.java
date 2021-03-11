@@ -6,8 +6,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController controller = Navigation.findNavController(this,R.id.fragment);
+        InputMethodManager manager = ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE));
+        if (manager != null) {
+            manager.hideSoftInputFromWindow(findViewById(R.id.fragment).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
         return controller.navigateUp();
     }
 
