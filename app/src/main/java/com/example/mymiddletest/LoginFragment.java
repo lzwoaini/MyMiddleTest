@@ -96,7 +96,7 @@ public class LoginFragment extends Fragment {
                 String message = myViewModel.login(editText_username.getText().toString().trim(),editText_password.getText().toString().trim());
                 if(message.equals("success")) {
                     NavController controller = Navigation.findNavController(v);
-                    controller.navigate(R.id.action_loginFragment_to_registerFragment);
+                    controller.navigate(R.id.homeFragmentControll);
                 }else {
                     textView_message.setText(message);
                 }
