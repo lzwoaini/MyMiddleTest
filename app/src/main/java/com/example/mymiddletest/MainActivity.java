@@ -18,17 +18,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NavController controller = Navigation.findNavController(this,R.id.fragment);
-        NavigationUI.setupActionBarWithNavController(this,controller);
+        NavController controller = Navigation.findNavController(this, R.id.fragment);
+        NavigationUI.setupActionBarWithNavController(this, controller);
     }
-
-
 
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController controller = Navigation.findNavController(this,R.id.fragment);
-        InputMethodManager manager = ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE));
+        NavController controller = Navigation.findNavController(this, R.id.fragment);
+        InputMethodManager manager = ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE));
         if (manager != null) {
             manager.hideSoftInputFromWindow(findViewById(R.id.fragment).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
