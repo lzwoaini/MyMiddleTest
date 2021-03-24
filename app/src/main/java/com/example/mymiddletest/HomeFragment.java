@@ -14,6 +14,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -22,8 +24,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.mymiddletest.databinding.HomeFragmentBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class HomeFragment extends Fragment {
 
@@ -34,35 +37,51 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private BottomNavigationView bottomNavigationView;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_fragment, container, false);
-        textView = view.findViewById(R.id.textView11);
-        button = view.findViewById(R.id.button3);
+        tabLayout = view.findViewById(R.id.tabLayout);
+        viewPager2 = view.findViewById(R.id.viewPage2);
         return view;
     }
     private View view;
-    private HomeViewModel homeViewModel;
-    private TextView textView;
-    private Button button;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        homeViewModel = new ViewModelProvider(getActivity()).get(HomeViewModel.class);
-        homeViewModel.getNumber().observe(getActivity(), new Observer<Integer>() {
+        viewPager2.setAdapter(new FragmentStateAdapter(this) {
+            @NonNull
             @Override
-            public void onChanged(Integer integer) {
-                textView.setText(String.valueOf(integer));
+            public Fragment createFragment(int position) {
+                if (position == 0) {
+                    return new HomeFragmentChild1();
+                }else if (position == 1) {
+                    return new HomeFragmentChild2();
+                }else {
+                    return new HomeFragmentChild3();
+                }
+            }
+
+            @Override
+            public int getItemCount() {
+                return 3;
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
-            public void onClick(View v) {
-                homeViewModel.add(1);
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                if (position == 0) {
+                    tab.setText("One");
+                }else if (position == 1) {
+                    tab.setText("Tw0");
+                }else {
+                    tab.setText("Three");
+                }
             }
         });
+        tabLayoutMediator.attach();
     }
 
 }
